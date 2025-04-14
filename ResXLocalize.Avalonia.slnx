@@ -1,11 +1,11 @@
 <Solution>
-    <Folder Name="/Solution Items/">
-        <File Path="Directory.Build.props"/>
-        <File Path="README.md"/>
-    </Folder>
-
-    <Project Path="ResXLocalize.Avalonia\ResXLocalize.Avalonia.csproj"/>
-    <Project Path="ResXLocalize.Avalonia.R3\ResxLocalize.Avalonia.R3.csproj"/>
-    <Project Path="ResXLocalize.Avalonia.Shared/ResXLocalize.Avalonia.Shared.shproj"/>
-    <Project Path="Sandbox\Sandbox.csproj"/>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+    <File Path="ResXLocalize.Avalonia.targets" />
+  </Folder>
+  <Project Path="ResXLocalize.Avalonia.R3\ResxLocalize.Avalonia.R3.csproj" />
+  <Project Path="ResXLocalize.Avalonia.Shared/ResXLocalize.Avalonia.Shared.shproj" />
+  <Project Path="ResXLocalize.Avalonia\ResXLocalize.Avalonia.csproj" />
+  <Project Path="Sandbox\Sandbox.csproj" />
 </Solution>

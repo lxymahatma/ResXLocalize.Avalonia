@@ -1,4 +1,7 @@
-﻿namespace ResXLocalize.Avalonia.StringBuilders;
+﻿using System.Text;
+using static ResXLocalize.Avalonia.SourceGenerationTexts;
+
+namespace ResXLocalize.Avalonia.StringBuilders;
 
 public sealed class GeneratorStringBuilder
 {

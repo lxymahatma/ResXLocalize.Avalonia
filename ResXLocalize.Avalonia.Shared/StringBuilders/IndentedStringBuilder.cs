@@ -1,4 +1,6 @@
-﻿namespace ResXLocalize.Avalonia.StringBuilders;
+﻿using System.Text;
+
+namespace ResXLocalize.Avalonia.StringBuilders;
 
 public class IndentedStringBuilder
 {

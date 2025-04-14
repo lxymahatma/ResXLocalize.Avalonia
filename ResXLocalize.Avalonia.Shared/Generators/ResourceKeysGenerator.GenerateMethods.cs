@@ -1,4 +1,10 @@
-﻿namespace ResXLocalize.Avalonia.Generators;
+﻿using System.Collections.Immutable;
+using System.Text;
+using Microsoft.CodeAnalysis;
+using ResXLocalize.Avalonia.Extensions;
+using ResXLocalize.Avalonia.StringBuilders;
+
+namespace ResXLocalize.Avalonia.Generators;
 
 public partial class ResourceKeysGenerator
 {
@@ -158,11 +164,16 @@ public partial class ResourceKeysGenerator
         string className)
     {
         var literalBuilder = new GeneratorStringBuilder();
-        literalBuilder.AppendLine($$"""
-                                    using global::System.ComponentModel;
-                                    using global::System.Runtime.CompilerServices;
-                                    using global::Avalonia.Threading;
 
+        literalBuilder.AppendLine("""
+                                  using global::System.ComponentModel;
+                                  using global::System.Runtime.CompilerServices;
+                                  using global::Avalonia.Threading;
+                                  """);
+#if R3
+        literalBuilder.AppendLine("using global::R3;");
+#endif
+        literalBuilder.AppendLine($$"""
                                     namespace {{resxNamespace}};
 
                                     public static class {{className}}Literal
@@ -177,6 +188,7 @@ public partial class ResourceKeysGenerator
                                        """);
         }
 
+
         literalBuilder.AppendLine($$"""
                                         public sealed class LocalizedString : INotifyPropertyChanged, ILocalizedString
                                         {
@@ -185,21 +197,32 @@ public partial class ResourceKeysGenerator
                                             public LocalizedString(string resourceKey)
                                             {
                                                 Value = resourceKey;
-                                                LocalizationManager.CultureChanged += (_, _) => OnPropertyChanged(nameof(Value));
-                                            }
-
-                                            public event PropertyChangedEventHandler? PropertyChanged;
-
-                                            public override string ToString() => Value;
-
-                                            public static implicit operator LocalizedString(string resourceKey) => new(resourceKey);
-
-                                            private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
-                                                Dispatcher.UIThread.Post(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
-                                        }
-                                    }
                                     """);
 
+#if BASE
+        literalBuilder.AppendLine("            LocalizationManager.CultureChanged += (_, _) => OnPropertyChanged(nameof(Value));");
+#elif R3
+        literalBuilder.AppendLine("""
+                                              Observable.FromEventHandler(
+                                                      h => LocalizationManager.CultureChanged += h,
+                                                      h => LocalizationManager.CultureChanged -= h)
+                                                  .Subscribe(this, (_, state) => state.OnPropertyChanged(nameof(Value)));
+                                  """);
+#endif
+        literalBuilder.AppendLine("""
+                                          }
+
+                                          public event PropertyChangedEventHandler? PropertyChanged;
+
+                                          public override string ToString() => Value;
+
+                                          public static implicit operator LocalizedString(string resourceKey) => new(resourceKey);
+
+                                          private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+                                              Dispatcher.UIThread.Post(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
+                                      }
+                                  }
+                                  """);
         spc.AddSource($"{className}.Literal.cs", literalBuilder.ToString());
     }
 

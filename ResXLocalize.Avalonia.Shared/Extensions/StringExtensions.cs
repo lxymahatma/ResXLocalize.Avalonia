@@ -1,4 +1,6 @@
-﻿namespace ResXLocalize.Avalonia.Extensions;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace ResXLocalize.Avalonia.Extensions;
 
 public static class StringExtensions
 {

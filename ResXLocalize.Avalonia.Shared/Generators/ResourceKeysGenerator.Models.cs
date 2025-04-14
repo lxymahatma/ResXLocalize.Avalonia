@@ -1,4 +1,6 @@
-﻿namespace ResXLocalize.Avalonia.Generators;
+﻿using Microsoft.CodeAnalysis;
+
+namespace ResXLocalize.Avalonia.Generators;
 
 public partial class ResourceKeysGenerator
 {

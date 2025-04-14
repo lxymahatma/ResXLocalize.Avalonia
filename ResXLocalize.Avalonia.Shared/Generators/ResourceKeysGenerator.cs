@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using Microsoft.CodeAnalysis;
 
 namespace ResXLocalize.Avalonia.Generators;
 

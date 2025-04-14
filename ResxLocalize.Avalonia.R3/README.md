@@ -1,1 +1,1 @@
-﻿# ResXLocalize.Avalonia
+﻿# ResXLocalize.Avalonia.R3

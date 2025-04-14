@@ -1,0 +1,37 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:loc="https://github.com/lxymahatma/ResXLocalize.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Sandbox.ViewModels"
+    x:Class="Sandbox.Views.MainView"
+    x:DataType="vm:MainViewModel"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <StackPanel
+        HorizontalAlignment="Center"
+        Spacing="20"
+        VerticalAlignment="Center">
+        <TextBlock
+            FontSize="20"
+            HorizontalAlignment="Center"
+            Text="{Localize {x:Static loc:ResourcesLiteral.Language}}"
+            VerticalAlignment="Center" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            Text="{Localize {x:Static loc:ResourcesLiteral.Change_Language}}" />
+
+        <ComboBox
+            HorizontalAlignment="Center"
+            ItemsSource="{Binding Languages}"
+            SelectedIndex="{Binding SelectedIndex}" />
+    </StackPanel>
+
+</UserControl>

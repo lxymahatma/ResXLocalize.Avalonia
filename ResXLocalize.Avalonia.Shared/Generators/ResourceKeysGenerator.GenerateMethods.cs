@@ -109,7 +109,7 @@ public partial class ResourceKeysGenerator
         sb.AppendLine($"""
                        [assembly: XmlnsDefinition("https://github.com/avaloniaui", "{resxNamespace}.Extensions.MarkupExtensions")]
                        """);
-        spc.AddSource("AssemblyInfo.cs", sb.ToString());
+        spc.AddSource("AssemblyInfo.g.cs", sb.ToString());
     }
 
     #region Designer and Literal

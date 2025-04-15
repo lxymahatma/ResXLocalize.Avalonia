@@ -1,0 +1,45 @@
+﻿<Project>
+    <Import Project="$(SolutionDir)Directory.Build.props"/>
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <IsRoslynComponent>true</IsRoslynComponent>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <!-- Nuget Info -->
+    <PropertyGroup>
+        <Authors>lxymahatma</Authors>
+        <PackageVersion>1.0.0</PackageVersion>
+        <PackageProjectUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Copyright>Copyright © lxymahatma 2025</Copyright>
+        <PackageTags>avalonia;localization;library</PackageTags>
+    </PropertyGroup>
+
+    <!-- Pack -->
+    <ItemGroup>
+        <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="\"/>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
+        <None Include="$(OutputPath)\$(AssemblyName).targets" Pack="true" PackagePath="build"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp"/>
+        <PackageReference Include="Polyfill"/>
+        <PackageReference Include="Roslynator.CodeAnalysis.Analyzers"/>
+    </ItemGroup>
+
+    <Target Name="RenameTargetsFile" BeforeTargets="CoreCompile">
+        <Copy SourceFiles="$(SolutionDir)ResXLocalize.Avalonia.targets"
+              DestinationFiles="$(OutputPath)\$(AssemblyName).targets"
+              SkipUnchangedFiles="true"/>
+    </Target>
+</Project>

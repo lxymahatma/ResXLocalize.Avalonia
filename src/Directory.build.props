@@ -13,7 +13,7 @@
     <!-- Nuget Info -->
     <PropertyGroup>
         <Authors>lxymahatma</Authors>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
         <PackageProjectUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</PackageProjectUrl>
         <RepositoryUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

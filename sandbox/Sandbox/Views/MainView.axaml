@@ -27,6 +27,10 @@
         <TextBlock
             HorizontalAlignment="Center"
             Text="{Localize {x:Static loc:ResourcesLiteral.Change_Language}}" />
+        
+        <TextBlock
+            HorizontalAlignment="Center"
+            Text="{Binding Text}" />
 
         <ComboBox
             HorizontalAlignment="Center"

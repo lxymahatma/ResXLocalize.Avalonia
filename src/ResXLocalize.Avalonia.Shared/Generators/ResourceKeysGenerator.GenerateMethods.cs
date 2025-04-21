@@ -188,7 +188,6 @@ public partial class ResourceKeysGenerator
                                        """);
         }
 
-
         literalBuilder.AppendLine($$"""
                                         public sealed class LocalizedString : INotifyPropertyChanged, ILocalizedString
                                         {
@@ -197,19 +196,22 @@ public partial class ResourceKeysGenerator
                                             public LocalizedString(string resourceKey)
                                             {
                                                 Value = resourceKey;
+                                                if ({{className}}.ResourceManager.GetString(resourceKey) is not null)
+                                                {
                                     """);
 
 #if BASE
-        literalBuilder.AppendLine("            LocalizationManager.CultureChanged += (_, _) => OnPropertyChanged(nameof(Value));");
+        literalBuilder.AppendLine("                LocalizationManager.CultureChanged += (_, _) => OnPropertyChanged(nameof(Value));");
 #elif R3
         literalBuilder.AppendLine("""
-                                              Observable.FromEventHandler(
-                                                      h => LocalizationManager.CultureChanged += h,
-                                                      h => LocalizationManager.CultureChanged -= h)
-                                                  .Subscribe(this, (_, state) => state.OnPropertyChanged(nameof(Value)));
+                                                  Observable.FromEventHandler(
+                                                          h => LocalizationManager.CultureChanged += h,
+                                                          h => LocalizationManager.CultureChanged -= h)
+                                                      .Subscribe(this, (_, state) => state.OnPropertyChanged(nameof(Value)));
                                   """);
 #endif
         literalBuilder.AppendLine("""
+                                              }
                                           }
 
                                           public event PropertyChangedEventHandler? PropertyChanged;

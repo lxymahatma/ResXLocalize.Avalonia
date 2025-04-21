@@ -8,11 +8,16 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     public partial int SelectedIndex { get; set; }
 
+    [ObservableProperty]
+    public partial ResourcesLiteral.LocalizedString Text { get; set; }
+
     public static IReadOnlyList<ResourcesLiteral.LocalizedString> Languages =>
     [
         ResourcesLiteral.Chinese,
         ResourcesLiteral.English
     ];
+
+    public MainViewModel() => Text = "Fixed Text";
 
     partial void OnSelectedIndexChanged(int value)
     {

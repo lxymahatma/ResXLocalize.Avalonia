@@ -255,11 +255,11 @@ public partial class ResourceKeysGenerator
                                      builder.Property(clrProperty, PropertyInfoAccessorFactory.CreateInpcPropertyAccessor);
                                      return new CompiledBindingExtension
                                      {
-                                     Mode = BindingMode.OneWay,
-                                     Source = _localizedString,
-                                     Path = builder.Build()
-                                 };
-                             }
+                                         Mode = BindingMode.OneWay,
+                                         Source = _localizedString,
+                                         Path = builder.Build()
+                                     };
+                                 }
                              """);
         return builder;
     }

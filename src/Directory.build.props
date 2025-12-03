@@ -1,8 +1,10 @@
 ﻿<Project>
-    <Import Project="$(SolutionDir)Directory.Build.props"/>
-
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>true</ImplicitUsings>
+        <LangVersion>preview</LangVersion>
+        <UseArtifactsOutput>true</UseArtifactsOutput>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -13,7 +15,7 @@
     <!-- Nuget Info -->
     <PropertyGroup>
         <Authors>lxymahatma</Authors>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <PackageProjectUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</PackageProjectUrl>
         <RepositoryUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

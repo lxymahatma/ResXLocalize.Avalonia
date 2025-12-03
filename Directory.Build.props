@@ -1,8 +1,0 @@
-<Project>
-    <PropertyGroup>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>true</ImplicitUsings>
-        <LangVersion>preview</LangVersion>
-        <BaseOutputPath>$(SolutionDir)bin\</BaseOutputPath>
-    </PropertyGroup>
-</Project>

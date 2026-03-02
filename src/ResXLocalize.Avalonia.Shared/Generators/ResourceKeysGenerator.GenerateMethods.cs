@@ -250,18 +250,8 @@ public partial class ResourceKeysGenerator
                              {
                                  private readonly ILocalizedString? _localizedString;
 
-                                 public override CompiledBindingExtension ProvideValue(IServiceProvider serviceProvider)
-                                 {
-                                     var builder = new CompiledBindingPathBuilder();
-                                     var clrProperty = new ClrPropertyInfo("Value", o => ((ILocalizedString)o).Value, null, typeof(ILocalizedString));
-                                     builder.Property(clrProperty, PropertyInfoAccessorFactory.CreateInpcPropertyAccessor);
-                                     return new CompiledBindingExtension
-                                     {
-                                         Mode = BindingMode.OneWay,
-                                         Source = _localizedString,
-                                         Path = builder.Build()
-                                     };
-                                 }
+                                 public override CompiledBinding ProvideValue(IServiceProvider serviceProvider) =>
+                                    CompiledBinding.Create<ILocalizedString, string>(x => x.Value, _localizedString, null, BindingMode.OneWay);
                              """);
         return builder;
     }

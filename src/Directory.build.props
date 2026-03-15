@@ -15,7 +15,7 @@
     <!-- Nuget Info -->
     <PropertyGroup>
         <Authors>lxymahatma</Authors>
-        <PackageVersion>2.0.0-preview1</PackageVersion>
+        <PackageVersion>2.0.0-preview2</PackageVersion>
         <PackageProjectUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</PackageProjectUrl>
         <RepositoryUrl>https://github.com/lxymahatma/ResXLocalize.Avalonia</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

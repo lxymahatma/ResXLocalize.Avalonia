@@ -63,6 +63,7 @@ public partial class ResourceKeysGenerator
                                             """);
         spc.AddSource("LocalizeExtension.cs", localizeExtensionBuilder.ToString());
 
+        localizationManagerBuilder.AppendLine("CultureChanged?.Invoke(null, EventArgs.Empty);");
         localizationManagerBuilder.ResetIndent();
         localizationManagerBuilder.AppendLine("""
                                                       }
@@ -221,7 +222,7 @@ public partial class ResourceKeysGenerator
                                           public static implicit operator LocalizedString(string resourceKey) => new(resourceKey);
 
                                           private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
-                                              Dispatcher.UIThread.Post(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
+                                              PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
                                       }
                                   }
                                   """);
@@ -275,7 +276,6 @@ public partial class ResourceKeysGenerator
                                      set
                                      {
                                          field = value;
-                                         CultureChanged?.Invoke(null, EventArgs.Empty);
                                          CultureInfo.CurrentUICulture = value;
                              """);
         builder.IncreaseIndent(3);

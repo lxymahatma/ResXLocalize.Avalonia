@@ -6,11 +6,17 @@ public static class StringExtensions
 {
     public static bool IsNullOrEmpty([NotNullWhen(false)] this string? text) => string.IsNullOrEmpty(text);
 
-    public static string EscapeXmlDoc(this string text) =>
-        text.Replace("&", "&amp;")
-            .Replace("<", "&lt;")
-            .Replace(">", "&gt;");
+    extension(string text)
+    {
+        public string EscapeXmlDoc() =>
+            text.Replace("&", "&amp;")
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;");
 
-    public static string GetValidIdentifier(this string text) =>
-        new(text.Select(c => char.IsLetterOrDigit(c) ? c : '_').ToArray());
+        public string GetValidIdentifier()
+        {
+            var sanitized = new string(text.Select(c => char.IsLetterOrDigit(c) ? c : '_').ToArray());
+            return sanitized.Length > 0 && char.IsDigit(sanitized[0]) ? "_" + sanitized : sanitized;
+        }
+    }
 }

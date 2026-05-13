@@ -39,8 +39,8 @@ public sealed partial class ResourceKeysGenerator : IIncrementalGenerator
                 }
 
                 relativeDir = relativeDir
-                    .Replace(Path.DirectorySeparatorChar.ToString(), string.Empty)
-                    .Replace(Path.AltDirectorySeparatorChar.ToString(), string.Empty);
+                    .Replace(Path.DirectorySeparatorChar, '.')
+                    .Replace(Path.AltDirectorySeparatorChar, '.');
                 return new ResourceInfo(resourceFile, relativeDir, resourceFileName);
             })
             .Collect();
@@ -57,9 +57,8 @@ public sealed partial class ResourceKeysGenerator : IIncrementalGenerator
         }
 
         var xdoc = XDocument.Parse(text);
-        var dataElements = xdoc.Descendants("data");
 
-        foreach (var element in dataElements)
+        foreach (var element in xdoc.Descendants("data"))
         {
             var nameAttribute = element.Attribute("name");
             var valueElement = element.Element("value");

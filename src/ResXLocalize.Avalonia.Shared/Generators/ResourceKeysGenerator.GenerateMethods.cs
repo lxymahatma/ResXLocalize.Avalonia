@@ -131,7 +131,7 @@ public partial class ResourceKeysGenerator
                                      {
                                          [field: global::System.Diagnostics.CodeAnalysis.AllowNullAttribute()] [field: global::System.Diagnostics.CodeAnalysis.MaybeNullAttribute()]
                                          public static global::System.Resources.ResourceManager ResourceManager =>
-                                             field ??= new global::System.Resources.ResourceManager("{{rootNamespace}}.{{relativeDir}}.{{className}}", typeof({{className}}).Assembly);
+                                             field ??= new global::System.Resources.ResourceManager("{{rootNamespace}}.{{relativeDir}}{{className}}", typeof({{className}}).Assembly);
 
                                          public static global::System.Globalization.CultureInfo? Culture { get; set; }
 

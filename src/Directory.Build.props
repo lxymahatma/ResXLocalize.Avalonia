@@ -27,7 +27,7 @@
 
     <!-- Pack -->
     <ItemGroup>
-        <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
         <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false"/>
         <None Include="$(OutputPath)\$(AssemblyName).targets" Pack="true" PackagePath="build"/>
     </ItemGroup>
@@ -49,7 +49,7 @@
     </ItemGroup>
 
     <Target Name="RenameTargetsFile" BeforeTargets="CoreCompile">
-        <Copy SourceFiles="$(SolutionDir)ResXLocalize.Avalonia.targets"
+        <Copy SourceFiles="..\..\ResXLocalize.Avalonia.targets"
               DestinationFiles="$(OutputPath)\$(AssemblyName).targets"
               SkipUnchangedFiles="true"/>
     </Target>

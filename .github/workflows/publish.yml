@@ -1,0 +1,40 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags: ['[0-9]*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: nuget
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Set Version from tag
+        run: echo "Version=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
+
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: lxymahatma
+
+      - name: Install dotnet-releaser
+        run: dotnet tool install --global dotnet-releaser
+
+      - name: Run dotnet-releaser
+        run: |
+          dotnet-releaser run \
+            --nuget-token "${{ steps.nuget-login.outputs.NUGET_API_KEY }}" \
+            --github-token "${{ secrets.GITHUB_TOKEN }}" \
+            dotnet-releaser.toml

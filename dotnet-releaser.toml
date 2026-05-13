@@ -1,0 +1,17 @@
+profile = "custom"
+
+[msbuild]
+project = [
+  "src/ResXLocalize.Avalonia/ResXLocalize.Avalonia.csproj",
+  "src/ResXLocalize.Avalonia.R3/ResxLocalize.Avalonia.R3.csproj",
+]
+configuration = "Release"
+
+[nuget]
+publish = true
+source = "https://api.nuget.org/v3/index.json"
+
+[github]
+user = "lxymahatma"
+repo = "ResXLocalize.Avalonia"
+version_prefix = ""

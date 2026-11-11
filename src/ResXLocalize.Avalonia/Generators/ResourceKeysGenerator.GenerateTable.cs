@@ -37,7 +37,16 @@ public partial class ResourceKeysGenerator
             {
                 builder.AppendLine();
                 AppendDocumentation(builder, key.NeutralValue);
-                builder.AppendLine($"public static LocalizedString {key.Identifier} => Get({className}Key.{key.Identifier});");
+                if (key.ArgumentCount == 0)
+                {
+                    builder.AppendLine($"public static LocalizedString {key.Identifier} => Get({className}Key.{key.Identifier});");
+                    continue;
+                }
+
+                var arguments = Enumerable.Range(0, key.ArgumentCount).Select(static index => $"arg{index}").ToArray();
+                var parameters = string.Join(", ", arguments.Select(static argument => $"object? {argument}"));
+                builder.AppendLine(
+                    $"public static LocalizedString {key.Identifier}({parameters}) => Get({className}Key.{key.Identifier}).Format({string.Join(", ", arguments)});");
             }
         }
 

@@ -9,7 +9,7 @@ public partial class ResourceKeysGenerator
         ImmutableArray<LocalizationKeyModel> Keys,
         ImmutableArray<CultureTableModel> Cultures);
 
-    private sealed record LocalizationKeyModel(string Name, string Identifier, string NeutralValue);
+    private sealed record LocalizationKeyModel(string Name, string Identifier, string NeutralValue, int ArgumentCount);
 
     private sealed record CultureTableModel(string Culture, string ClassName, ImmutableArray<string> Values);
 }

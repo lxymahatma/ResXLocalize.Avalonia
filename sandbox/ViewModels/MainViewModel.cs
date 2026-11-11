@@ -10,6 +10,7 @@ public partial class MainViewModel : ViewModelBase
     public partial int SelectedIndex { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ClickCountText))]
     public partial int ClickCount { get; set; }
 
     [ObservableProperty]
@@ -20,6 +21,8 @@ public partial class MainViewModel : ViewModelBase
         Resources.Chinese,
         Resources.English
     ];
+
+    public LocalizedString ClickCountText => Resources.ClickCount(ClickCount);
 
     public MainViewModel() => Text = LocalizedString.FromText("Fixed Text");
 

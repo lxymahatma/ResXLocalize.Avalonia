@@ -8,7 +8,7 @@ public partial class ResourceKeysGenerator
         builder.AppendLine("using global::Avalonia.Metadata;");
         builder.AppendLine();
 
-        if (!xmlnsNamespace.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(xmlnsNamespace))
         {
             builder.AppendLine($"""[assembly: XmlnsPrefix("{xmlnsNamespace}", "loc")]""");
             builder.AppendLine($"""[assembly: XmlnsDefinition("{xmlnsNamespace}", "{resxNamespace}")]""");

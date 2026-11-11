@@ -17,7 +17,7 @@ internal sealed record ResourceFile(string Path, string BaseName, string Culture
             : fileName;
 
         var text = file.GetText(cancellationToken)?.ToString();
-        var entries = text.IsNullOrEmpty() ? [] : ReadEntries(text);
+        var entries = string.IsNullOrEmpty(text) ? [] : ReadEntries(text);
         return new ResourceFile(file.Path, baseName, culture, new EquatableArray<ResourceEntry>(entries));
     }
 

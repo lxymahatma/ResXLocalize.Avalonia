@@ -66,7 +66,7 @@ public sealed class ResourceFileAnalyzer : DiagnosticAnalyzer
         var options = context.Options;
         ResourceIndex? index = null;
         ResourceIndex GetIndex(CancellationToken cancellationToken) =>
-            LazyInitializer.EnsureInitialized(ref index, () => new ResourceIndex(options, cancellationToken))!;
+            LazyInitializer.EnsureInitialized(ref index, () => new ResourceIndex(options, cancellationToken));
 
         context.RegisterAdditionalFileAction(fileContext =>
         {

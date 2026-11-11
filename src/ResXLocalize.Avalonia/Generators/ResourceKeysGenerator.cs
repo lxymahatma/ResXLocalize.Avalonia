@@ -24,7 +24,7 @@ public sealed partial class ResourceKeysGenerator : IIncrementalGenerator
         options.TryGetValue("build_property.XmlnsDefinitionNamespace", out var xmlnsDefinitionNamespace);
         options.TryGetValue("build_property.DefaultLocalizationProvider", out var defaultLocalizationProvider);
         return new GeneratorOptions(
-            resxNamespace.IsNullOrEmpty() ? rootNamespace! : resxNamespace,
+            string.IsNullOrEmpty(resxNamespace) ? rootNamespace! : resxNamespace,
             xmlnsDefinitionNamespace,
             defaultLocalizationProvider);
     }

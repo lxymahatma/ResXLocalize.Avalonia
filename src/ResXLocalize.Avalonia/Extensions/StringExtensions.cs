@@ -1,12 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using Microsoft.CodeAnalysis.CSharp;
 
 namespace ResXLocalize.Avalonia.Extensions;
 
 public static class StringExtensions
 {
-    public static bool IsNullOrEmpty([NotNullWhen(false)] this string? text) => string.IsNullOrEmpty(text);
-
     extension(string text)
     {
         public string EscapeXmlDoc() =>

@@ -13,13 +13,13 @@ internal readonly struct EquatableArray<T>(ImmutableArray<T> array) : IEquatable
 
     public override int GetHashCode()
     {
-        var hash = 17;
+        var hash = new HashCode();
         foreach (var item in _array)
         {
-            hash = unchecked((hash * 31) + item.GetHashCode());
+            hash.Add(item);
         }
 
-        return hash;
+        return hash.ToHashCode();
     }
 
     public ImmutableArray<T>.Enumerator GetEnumerator() => _array.GetEnumerator();

@@ -16,9 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '11.0.x'
 
       - name: Set Version from tag
         run: echo "Version=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"

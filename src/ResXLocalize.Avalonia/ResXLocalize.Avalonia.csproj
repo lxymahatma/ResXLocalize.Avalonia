@@ -6,4 +6,9 @@
         <Description>A Resx source generator to provide easy localization for Avalonia</Description>
     </PropertyGroup>
 
+    <ItemGroup>
+        <AdditionalFiles Include="AnalyzerReleases.Shipped.md"/>
+        <AdditionalFiles Include="AnalyzerReleases.Unshipped.md"/>
+    </ItemGroup>
+
 </Project>

@@ -21,7 +21,7 @@
     <data name="Language" xml:space="preserve">
         <value>Language</value>
     </data>
-    <data name="Change_Language" xml:space="preserve">
+    <data name="ChangeLanguage" xml:space="preserve">
         <value>Change Language</value>
     </data>
     <data name="Chinese" xml:space="preserve">
@@ -29,5 +29,11 @@
     </data>
     <data name="English" xml:space="preserve">
         <value>English</value>
+    </data>
+    <data name="ClickCount" xml:space="preserve">
+        <value>Clicked {0} times</value>
+    </data>
+    <data name="Click" xml:space="preserve">
+        <value>Click</value>
     </data>
 </root>

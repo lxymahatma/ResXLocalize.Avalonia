@@ -21,7 +21,7 @@
     <data name="Language" xml:space="preserve">
         <value>语言</value>
     </data>
-    <data name="Change_Language" xml:space="preserve">
+    <data name="ChangeLanguage" xml:space="preserve">
         <value>切换语言</value>
     </data>
     <data name="Chinese" xml:space="preserve">
@@ -29,5 +29,11 @@
     </data>
     <data name="English" xml:space="preserve">
         <value>英语</value>
+    </data>
+    <data name="ClickCount" xml:space="preserve">
+        <value>已点击 {0} 次</value>
+    </data>
+    <data name="Click" xml:space="preserve">
+        <value>点击</value>
     </data>
 </root>

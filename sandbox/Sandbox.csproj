@@ -1,6 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\ResXLocalize.Avalonia.targets"/>
-
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0</TargetFramework>
@@ -33,4 +31,6 @@
     <ItemGroup>
         <ProjectReference Include="..\src\ResXLocalize.Avalonia\ResXLocalize.Avalonia.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
     </ItemGroup>
+
+    <Import Project="..\ResXLocalize.Avalonia.targets"/>
 </Project>

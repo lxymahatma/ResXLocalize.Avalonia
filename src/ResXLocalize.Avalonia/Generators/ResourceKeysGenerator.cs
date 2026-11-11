@@ -1,6 +1,3 @@
-using System.Xml.Linq;
-using Microsoft.CodeAnalysis;
-
 namespace ResXLocalize.Avalonia.Generators;
 
 [Generator(LanguageNames.CSharp)]
@@ -8,65 +5,57 @@ public sealed partial class ResourceKeysGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var namespaceInfo = context
-            .AnalyzerConfigOptionsProvider
-            .Select((c, _) =>
-            {
-                if (!c.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace))
-                {
-                    return null;
-                }
-
-                c.GlobalOptions.TryGetValue("build_property.ResxNamespace", out var resxNamespace);
-                c.GlobalOptions.TryGetValue("build_property.XmlnsDefinitionNamespace", out var xmlnsDefinitionNamespace);
-                c.GlobalOptions.TryGetValue("build_property.DefaultLocalizationProvider", out var defaultLocalizationProvider);
-                return new MsBuildPropertyInfo(rootNamespace, resxNamespace, xmlnsDefinitionNamespace, defaultLocalizationProvider);
-            });
+        var options = context.AnalyzerConfigOptionsProvider
+            .Select(static (provider, _) => ReadOptions(provider.GlobalOptions));
 
         var resourceFiles = context.AdditionalTextsProvider
-            .Where(static file => file.Path.EndsWith(".resx", StringComparison.OrdinalIgnoreCase));
-
-        var resources = resourceFiles.Combine(context.AnalyzerConfigOptionsProvider)
-            .Select((resourceFileAndOptions, _) =>
-            {
-                var (resourceFile, optionsProvider) = resourceFileAndOptions;
-                var options = optionsProvider.GetOptions(resourceFile);
-                var resourceFileName = Path.GetFileNameWithoutExtension(resourceFile.Path);
-
-                if (!options.TryGetValue("build_metadata.AdditionalFiles.RelativeDir", out var relativeDir))
-                {
-                    return null;
-                }
-
-                relativeDir = relativeDir
-                    .Replace(Path.DirectorySeparatorChar, '.')
-                    .Replace(Path.AltDirectorySeparatorChar, '.');
-                return new ResourceInfo(resourceFile, relativeDir, resourceFileName);
-            })
+            .Where(ResourceFile.IsResourceFile)
+            .Combine(context.AnalyzerConfigOptionsProvider)
+            .Select(static (pair, cancellationToken) => ResourceFile.Read(pair.Left, pair.Right.GetOptions(pair.Left), cancellationToken))
             .Collect();
 
-        context.RegisterSourceOutput(resources.Combine(namespaceInfo), GenerateFromData);
+        context.RegisterSourceOutput(resourceFiles.Combine(options), static (context, pair) => Generate(context, pair.Left, pair.Right));
     }
 
-    private static IEnumerable<(string Name, string Value)> ExtractResourceData(AdditionalText resourceFile)
+    private static GeneratorOptions ReadOptions(AnalyzerConfigOptions options)
     {
-        var text = resourceFile.GetText()?.ToString() ?? string.Empty;
-        if (string.IsNullOrEmpty(text))
+        options.TryGetValue("build_property.RootNamespace", out var rootNamespace);
+        options.TryGetValue("build_property.ResxNamespace", out var resxNamespace);
+        options.TryGetValue("build_property.XmlnsDefinitionNamespace", out var xmlnsDefinitionNamespace);
+        options.TryGetValue("build_property.DefaultLocalizationProvider", out var defaultLocalizationProvider);
+        return new GeneratorOptions(
+            resxNamespace.IsNullOrEmpty() ? rootNamespace! : resxNamespace,
+            xmlnsDefinitionNamespace,
+            defaultLocalizationProvider);
+    }
+
+    private static void Generate(SourceProductionContext context, ImmutableArray<ResourceFile> files, GeneratorOptions options)
+    {
+        var tables = BuildTables(files);
+        if (tables.IsEmpty)
         {
-            yield break;
+            return;
         }
 
-        var xdoc = XDocument.Parse(text);
+        var resxNamespace = options.ResxNamespace;
+        var defaultTable = tables.FirstOrDefault(table => table.ClassName == options.DefaultLocalizationProvider) ?? tables[0];
 
-        foreach (var element in xdoc.Descendants("data"))
+        foreach (var table in tables)
         {
-            var nameAttribute = element.Attribute("name");
-            var valueElement = element.Element("value");
-
-            if (nameAttribute != null && valueElement != null)
+            context.AddSource($"{table.ClassName}.g.cs", GenerateTable(resxNamespace, table));
+            foreach (var culture in table.Cultures)
             {
-                yield return (nameAttribute.Value, valueElement.Value.Trim());
+                context.AddSource($"{table.ClassName}.{culture.Culture}.g.cs", GenerateCultureTable(resxNamespace, table, culture));
             }
         }
+
+        context.AddSource("LocalizedString.g.cs", GenerateLocalizedString(resxNamespace));
+        context.AddSource("LocalizationTable.g.cs", GenerateLocalizationTable(resxNamespace));
+        context.AddSource("LocalizationManager.g.cs", GenerateLocalizationManager(resxNamespace, tables));
+        context.AddSource("LocalizeExtension.g.cs", GenerateLocalizeExtensions(resxNamespace, tables, defaultTable));
+        context.AddSource("LocalizedStringBinding.g.cs", GenerateLocalizedStringBinding(resxNamespace));
+        context.AddSource("AssemblyInfo.g.cs", GenerateAssemblyInfo(resxNamespace, options.XmlnsDefinitionNamespace));
     }
+
+    private static CodeBuilder CreateSourceBuilder() => new CodeBuilder().Append(Header).AppendLine();
 }

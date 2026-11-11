@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Sandbox.ViewModels;
 
@@ -9,15 +10,21 @@ public partial class MainViewModel : ViewModelBase
     public partial int SelectedIndex { get; set; }
 
     [ObservableProperty]
-    public partial ResourcesLiteral.LocalizedString Text { get; set; }
+    public partial int ClickCount { get; set; }
 
-    public static IReadOnlyList<ResourcesLiteral.LocalizedString> Languages =>
+    [ObservableProperty]
+    public partial LocalizedString Text { get; set; }
+
+    public static IReadOnlyList<LocalizedString> Languages { get; } =
     [
-        ResourcesLiteral.Chinese,
-        ResourcesLiteral.English
+        Resources.Chinese,
+        Resources.English
     ];
 
-    public MainViewModel() => Text = "Fixed Text";
+    public MainViewModel() => Text = LocalizedString.FromText("Fixed Text");
+
+    [RelayCommand]
+    private void Click() => ClickCount++;
 
     partial void OnSelectedIndexChanged(int value)
     {

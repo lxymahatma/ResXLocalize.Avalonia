@@ -21,21 +21,36 @@
         <TextBlock
             FontSize="20"
             HorizontalAlignment="Center"
-            Text="{Localize {x:Static loc:ResourcesLiteral.Language}}"
+            Text="{Localize Language}"
             VerticalAlignment="Center" />
 
         <TextBlock
             HorizontalAlignment="Center"
-            Text="{Localize {x:Static loc:ResourcesLiteral.Change_Language}}" />
-        
+            Text="{Localize ChangeLanguage}" />
+
         <TextBlock
             HorizontalAlignment="Center"
-            Text="{Binding Text}" />
+            Text="{Binding Text.Value}" />
 
         <ComboBox
             HorizontalAlignment="Center"
             ItemsSource="{Binding Languages}"
-            SelectedIndex="{Binding SelectedIndex}" />
+            SelectedIndex="{Binding SelectedIndex}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="loc:LocalizedString">
+                    <TextBlock Text="{Binding Value}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button
+            Command="{Binding ClickCommand}"
+            Content="{Localize Click}"
+            HorizontalAlignment="Center" />
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            Text="{Localize ClickCount, {Binding ClickCount}}" />
     </StackPanel>
 
 </UserControl>

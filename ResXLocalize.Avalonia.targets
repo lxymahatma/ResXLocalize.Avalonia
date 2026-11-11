@@ -1,23 +1,25 @@
 ﻿<Project>
-    <Target Name="AddNoCultureResxFilesAsAdditionalFiles"
-            BeforeTargets="GenerateMSBuildEditorConfigFileCore;CoreCompile"
-            Condition="'@(EmbeddedResource)' != ''">
-        <ItemGroup>
-            <ResxResources Include="@(EmbeddedResource)" Condition="'%(Extension)' == '.resx'"/>
-        </ItemGroup>
+    <ItemGroup>
+        <ResXLocalizeResource Include="@(EmbeddedResource->WithMetadataValue('Extension', '.resx'))"/>
+        <EmbeddedResource Remove="@(ResXLocalizeResource)"/>
+        <AdditionalFiles Include="@(ResXLocalizeResource)"/>
+    </ItemGroup>
 
-        <AssignCulture Files="@(ResxResources)">
-            <Output TaskParameter="AssignedFilesWithCulture" ItemName="_ResxWithCulture"/>
-            <Output TaskParameter="AssignedFilesWithNoCulture" ItemName="_ResxWithNoCulture"/>
+    <Target Name="ResXLocalizeAssignCulture"
+            BeforeTargets="GenerateMSBuildEditorConfigFileCore;CoreCompile"
+            Condition="'@(ResXLocalizeResource)' != ''">
+        <AssignCulture Files="@(ResXLocalizeResource)">
+            <Output TaskParameter="AssignedFiles" ItemName="_ResXLocalizeResourceWithCulture"/>
         </AssignCulture>
 
         <ItemGroup>
-            <AdditionalFiles Include="@(_ResxWithNoCulture)"/>
+            <AdditionalFiles Remove="@(ResXLocalizeResource)"/>
+            <AdditionalFiles Include="@(_ResXLocalizeResourceWithCulture)"/>
         </ItemGroup>
     </Target>
 
     <ItemGroup>
-        <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="RelativeDir"/>
+        <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="Culture"/>
         <CompilerVisibleProperty Include="XmlnsDefinitionNamespace"/>
         <CompilerVisibleProperty Include="ResxNamespace"/>
         <CompilerVisibleProperty Include="DefaultLocalizationProvider"/>

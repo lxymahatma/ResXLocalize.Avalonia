@@ -1,9 +1,0 @@
-{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "profiles": {
-    "DebugSourceGenerator": {
-      "commandName": "DebugRoslynComponent",
-      "targetProject": "../sandbox/Sandbox.csproj"
-    }
-  }
-}

@@ -171,9 +171,6 @@ public partial class ResourceKeysGenerator
                                   using global::System.Runtime.CompilerServices;
                                   using global::Avalonia.Threading;
                                   """);
-#if R3
-        literalBuilder.AppendLine("using global::R3;");
-#endif
         literalBuilder.AppendLine($$"""
                                     namespace {{resxNamespace}};
 
@@ -201,16 +198,7 @@ public partial class ResourceKeysGenerator
                                                 {
                                     """);
 
-#if BASE
         literalBuilder.AppendLine("                LocalizationManager.CultureChanged += (_, _) => OnPropertyChanged(nameof(Value));");
-#elif R3
-        literalBuilder.AppendLine("""
-                                                  Observable.FromEventHandler(
-                                                          h => LocalizationManager.CultureChanged += h,
-                                                          h => LocalizationManager.CultureChanged -= h)
-                                                      .Subscribe(this, (_, state) => state.OnPropertyChanged(nameof(Value)));
-                                  """);
-#endif
         literalBuilder.AppendLine("""
                                               }
                                           }

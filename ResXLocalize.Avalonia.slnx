@@ -7,11 +7,8 @@
         <File Path="README.md"/>
         <File Path="ResXLocalize.Avalonia.targets"/>
         <File Path="Directory.Packages.props"/>
-
     </Folder>
     <Folder Name="/src/">
-        <Project Path="src\ResXLocalize.Avalonia.R3\ResxLocalize.Avalonia.R3.csproj"/>
-        <Project Path="src\ResXLocalize.Avalonia.Shared\ResXLocalize.Avalonia.Shared.shproj"/>
         <Project Path="src\ResXLocalize.Avalonia\ResXLocalize.Avalonia.csproj"/>
     </Folder>
 </Solution>

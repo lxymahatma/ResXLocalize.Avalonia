@@ -6,10 +6,4 @@
         <Description>A Resx source generator to provide easy localization for Avalonia</Description>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <DefineConstants>BASE</DefineConstants>
-    </PropertyGroup>
-
-    <Import Project="..\ResXLocalize.Avalonia.Shared\ResXLocalize.Avalonia.Shared.projitems" Label="Shared"/>
-
 </Project>

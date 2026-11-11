@@ -3,7 +3,6 @@ profile = "custom"
 [msbuild]
 project = [
   "src/ResXLocalize.Avalonia/ResXLocalize.Avalonia.csproj",
-  "src/ResXLocalize.Avalonia.R3/ResxLocalize.Avalonia.R3.csproj",
 ]
 configuration = "Release"
 

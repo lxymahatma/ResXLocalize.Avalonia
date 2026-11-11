@@ -2,7 +2,7 @@
 
 namespace ResXLocalize.Avalonia.Extensions;
 
-public static class StringExtensions
+internal static class StringExtensions
 {
     extension(string text)
     {
